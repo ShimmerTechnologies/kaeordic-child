@@ -431,6 +431,10 @@ a.shortcode.button.outline {
     min-height: 50px;
 }
 
+.home-videos { 
+    margin-top: 30px;
+}
+
 .home-videos article {
     margin-bottom: 0 !important;
 }
@@ -445,12 +449,15 @@ a.shortcode.button.outline {
 }
 
 .themify_builder_row.themify_builder_2256_row.module_row.module_row_4.module_row_2256-4.clearfix.gutter-default {
-    padding: 0 0 30px 0;
+    padding: 0 0 120px 0;
+}
+.themify_builder_row.themify_builder_2256_row.module_row.module_row_3.module_row_2256-3.clearfix.gutter-default {
+    margin-top: 120px;
 }
 .themify_builder_row.themify_builder_2256_row.module_row.module_row_4.module_row_2256-4.clearfix.gutter-default, .themify_builder_row.themify_builder_2256_row.module_row.module_row_3.module_row_2256-3.clearfix.gutter-default {
     position: relative;
-    top: 60px;
 }
+
 .themify_builder_row.themify_builder_2256_row.module_row.module_row_4.module_row_2256-4.clearfix.gutter-default, .themify_builder_row.themify_builder_2256_row.module_row.module_row_3.module_row_2256-3.clearfix.gutter-default {
     background-color: rgba(30,0,79,.3);
 }
