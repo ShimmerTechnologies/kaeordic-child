@@ -17,16 +17,15 @@ function wp_enqueue_css_styles(){
 
 	$parent_style = 'themify-music';
 
-    wp_enqueue_style($parent_style, get_template_directory_uri() . '/style.min.css' );
-	wp_enqueue_style($parent_style, get_template_directory_uri() . '/media-queries.min.css');
-	wp_enqueue_style($parent_style, get_template_directory_uri() . '/rtl.min.css');
-	wp_enqueue_style($parent_style, get_template_directory_uri() . '/themify/css/themify.framework.min.css');
-	wp_enqueue_style($parent_style, get_template_directory_uri() . '/themify/css/themify-ui.min.css');
-	wp_enqueue_style($parent_style, get_template_directory_uri() . '/themify/css/lightbox.min.css');
-	wp_enqueue_style($parent_style, get_template_directory_uri() . '/themify/css/themify.common.min.css');
-	wp_enqueue_style($parent_style, get_template_directory_uri() . '/themify/css/themify-ui-rtl.min.css');
-	wp_enqueue_style($parent_style, get_template_directory_uri() . '/themify/css/themify-mediaelement.min.css');
-	wp_enqueue_style($parent_style, get_template_directory_uri() . '/themify/css/themify-notification.min.css');
+	wp_enqueue_style($parent_style, get_stylesheet_directory_uri(). '/includes/fonts/fonts.css', false);
+	wp_enqueue_style($parent_style, get_template_directory_uri() . '/media-queries.min.css', false);
+	wp_enqueue_style($parent_style, get_template_directory_uri() . '/mobile-menu.min.css', false);
+	wp_enqueue_style($parent_style, get_template_directory_uri() . '/rtl.min.css', false);
+	wp_enqueue_style($parent_style, get_template_directory_uri() . '/themify/css/base.min.css', false);
+	wp_enqueue_style($parent_style, get_template_directory_uri() . '/themify/css/themify.common.min.css', false);
+	wp_enqueue_style($parent_style, get_template_directory_uri() . '/themify/css/themify-ui.min.css', false);
+	wp_enqueue_style($parent_style, get_template_directory_uri() . '/themify/css/lightbox.min.css', false);
+	wp_enqueue_style($parent_style, get_template_directory_uri() . '/themify/css/themify-ui-rtl.min.css', false);
 
 }
 
@@ -152,133 +151,5 @@ function wpdocs_save_meta_box( $post_id, $post, $update ) {
  }
 add_action( 'save_post', 'wpdocs_save_meta_box', 10, 3 );
 
-function themify_audio_player_module() {
-		
-		/**
-		 * Category list
-		 * @var array
-		 */
-		$categories = array_merge(
-			array(
-				'off' => array(
-					'name' => __( 'Disable Audio Player', 'themify' ),
-					'value'	=> ''
-				),
-			),
-			themify_theme_get_albums()
-		);
-
-		/**
-		 * Module markup
-		 * @var string
-		 */
-                $key = 'setting-audio_player_type';
-                $type = themify_get($key);
-		$html = '<div><span class="label">' . __( 'Player Displays', 'themify' ) . '</span></div>';
-		$html .= sprintf(
-                            '<div class="themify_player_types">
-                                <label for="themify_player_type_album">
-                                    <input %5$s type="radio" name="%4$s" id="themify_player_type_album" value="album" /> 
-                                    %1$s
-                                </label>
-                                <label for="themify_player_type_songs">
-                                    <input %6$s type="radio" name="%4$s" id="themify_player_type_songs" value="songs" />
-                                    %2$s
-                                </label>
-                                <label for="themify_player_type_code">
-                                    <input %7$s type="radio" name="%4$s" id="themify_player_type_code" value="code" />
-                                    %3$s
-                                </label>
-                            </div>
-			',
-                        __('Album','themify'),
-                        __('Custom Songs','themify'),
-                        __('Custom Code','themify'),
-                        $key,
-                        !$type || $type=='album'?'checked="checked"':'',
-                        $type=='songs'?'checked="checked"':'',
-                        $type=='code'?'checked="checked"':''
-                        );
-                $key = 'setting-audio_player';
-                $html.=' <div class="pushlabel hide themify_album_tabs" id="themify_player_type_album_">';
-                $html .= sprintf('
-                            <select name="%s">%s</select>
-                            <p><small>%s</small></p>
-                            ',
-			$key,
-			themify_options_module( $categories, $key ),
-			__( 'Select an album to display or disable it completely.', 'themify' )
-		);
-
-		$key = 'setting-audio_player_autoplay';
-		/**
-		 * Autoplay markup
-		 * @var string
-		 */
-		$html .= sprintf('<p><span><label for="%1$s"><input type="checkbox" id="%1$s" name="%1$s" %2$s /> %3$s</label></span></p>',
-			$key,
-			checked( themify_get( $key ), 'on', false ),
-			__( 'Auto play audio.', 'themify' )
-		);
-                $html.='</div>';
-                
-                /**
-                * Custom Songs 
-                */
-                $key = 'setting-audio_player_songs';
-                
-             
-                $html.='<div class="hide themify_album_tabs pushlabel" id="themify_player_type_songs_">';
-                for ( $i=1; $i <= 12; ++$i ) {
-                    $title = themify_get($key.'_title_'.$i);
-                    $url = themify_get($key.'_url_'.$i);
-                    $img = themify_get($key.'_img_'.$i);
-                    $html .= sprintf('
-                                <div class="row">
-
-                                    <p>
-                                        <label class="label" for="themify_player_type_songs_title_'.$i.'">%s</label>
-                                        <input type="text" class="width10" id="themify_player_type_songs_title_'.$i.'" value="'.$title.'" name="%4$s_title_'.$i.'" />
-                                    </p>
-                                    <p>
-                                        <label class="label" for="themify_player_type_songs_url_'.$i.'">%s</label>
-                                        <input type="text" class="width10" id="themify_player_type_songs_url_'.$i.'" value="'.$url.'" name="%4$s_url_'.$i.'" />
-                                    </p>
-                                    <p>
-                                        <label class="label" for="themify_player_type_songs__image_'.$i.'">%s</label>
-                                        <input type="text" class="width10" id="themify_player_type_songs_image_'.$i.'" value="'.$img.'" name="%4$s_img_'.$i.'" />
-                                    </p>
-                                </div>
-                                ',
-                            sprintf(__( 'Song Title %s', 'themify' ),$i),
-                            sprintf(__( 'Song File URL %s', 'themify' ),$i),
-                            sprintf( __( 'Song Image %s', 'themify' ),$i),
-                            $key
-                    );
-                }
-                
-                $key = 'setting-audio_player_autoplay_songs';
-		/**
-		 * Autoplay markup
-		 * @var string
-		 */
-		$html .= sprintf('<p><span><label for="%1$s"><input type="checkbox" id="%1$s" name="%1$s" %2$s /> %3$s</label></span></p>',
-			$key,
-			checked( themify_get( $key ), 'on', false ),
-			__( 'Auto play audio.', 'themify' )
-		);
-                $html.='</div>';
-                
-                /**
-                * Custom code 
-                */
-                $key = 'setting-audio_player_code';
-                $value = themify_get($key);
-                $html.='<div class="hide themify_album_tabs pushlabel" id="themify_player_type_code_">';
-                $html.='<p><textarea class="widthfull" rows="4" name="'.$key.'">'.$value.'</textarea></p>';  
-                $html.=sprintf('<p><small>%s</small></p>',__('Insert any code (e.g SoundCloud embed code)'));
-                $html.='</div>';
-		return $html;
-}
 
 ?>

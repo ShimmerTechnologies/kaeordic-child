@@ -46,7 +46,7 @@
 
 					<?php } else  { ?>
 
-					<div class="footer-text clearfix" style="bottom: -80px;">
+					<div class="footer-text clearfix" style="bottom: -50px;">
 
 					<?php } ?>
 
@@ -77,9 +77,11 @@
 
 			
 
-			<!-- /#footerwrap -->
+			<!-- #footerwra
+					removed audio player, back to theme player 12/3/2020
+			 -->
 
-				<?php echo '<div id="home-player">' . do_shortcode('[audio src="https://www.kaeordic.com/wp-content/uploads/2018/08/Kaeordic-all-songs-montage.mp3" autoplay=0 loop=no]') . '</div>'; ?>
+				<?php //echo '<div id="home-player">' . do_shortcode('[audio src="https://www.kaeordic.com/wp-content/uploads/2018/08/Kaeordic-all-songs-montage.mp3" autoplay=0 loop=no]') . '</div>'; ?>
 
 		<?php } ?>
 
@@ -97,5 +99,16 @@
 		<!-- wp_footer -->
 		<?php themify_body_end(); // hook ?>
 		<?php wp_footer(); ?>
+		    <div class="body-overlay"></div>
+	    <?php if (!themify_check('setting-disable_ajax',true)): ?>
+	        <div id="themify-progress"></div>
+	    <?php endif; ?>
+		<?php echo Themify_Enqueue_Assets::loadGoogleFonts(true);?>
+		<!-- /#tf_mainwrap -->
+	    <?php get_template_part( 'includes/audio-player', 'index' );?>
+		<a class="floating-back-top tf_opacity" href="#header">
+			<span><?php _e( 'Back to top', 'themify' )?></span>
+		</a>
+
 	</body>
 </html>

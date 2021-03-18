@@ -22,11 +22,13 @@ global $themify; ?>
 			<?php themify_post_title(); ?>
 	<?php endif; //post title
 	endif; //if not home page show title here
-	?>
 
-	<?php if( 'below' != $themify->media_position ) get_template_part( 'includes/post-media', 'loop'); ?>
+	if(is_singular() == false || is_front_page() == true ):
+		 if( 'below' !== $themify->media_position ) themify_post_media(); 
+	endif; 
 
-	<?php if ( $themify->hide_meta != 'yes' || $themify->hide_date != 'yes' ) : ?>
+
+	 if ( $themify->hide_meta != 'yes' || $themify->hide_date != 'yes' ) : ?>
 		<div class="post-meta entry-meta clearfix">
 			<?php if ( $themify->hide_date != 'yes' ): ?>
 				<time class="post-date entry-date updated" datetime="<?php the_time( 'o-m-d' ) ?>">
@@ -36,28 +38,19 @@ global $themify; ?>
 				</time>
 			<?php endif; //post date ?>
 
-			<?php if ( $themify->hide_meta != 'yes' ): ?>
-				<?php if ( $themify->hide_meta_category != 'yes' ): ?>
-					<?php the_terms( get_the_id(), 'category', ' <span class="post-category">', ', ', '</span>' ); ?>
-				<?php endif; // meta category ?>
+			<?php if ( $themify->hide_meta !== 'yes' ): ?>
+				<?php themify_meta_taxonomies();?>
 
-				<?php if ( $themify->hide_meta_tag != 'yes' ): ?>
+				<?php if ( $themify->hide_meta_tag !== 'yes' ): ?>
 					<?php the_terms( get_the_id(),'post_tag', ' <span class="post-tag">', ', ', '</span>' ); ?>
 				<?php endif; // meta tag ?>
 
-				<?php if ( ! themify_get( 'setting-comments_posts' ) && comments_open() && $themify->hide_meta_comment != 'yes' ) : ?>
-					<span class="post-comment"><?php comments_popup_link( '0', '1', '%' ); ?></span>
-				<?php endif; // meta comments ?>
+				<?php themify_comments_popup_link();?>
 			<?php endif; //post meta ?>
 
-			<?php
-
-			if(is_singular() == false ):
-				get_template_part( 'includes/social-share' );
-			endif; 
+			<?php get_template_part( 'includes/social-share' ); ?>
 
 
-			 ?>
 		</div>
 		<!-- /post-meta -->
 	<?php endif; //post meta ?>
@@ -99,14 +92,7 @@ global $themify; ?>
 
 			<?php endif; //display content ?>
 
-
 		</div><!-- /.entry-content -->
-
-		<?php 
-		if(is_singular() == true ):
-			 get_template_part( 'includes/social-share' );
-		endif; 
-		?>
 
 		<?php edit_post_link(__('Edit', 'themify'), '<span class="edit-button">[', ']</span>'); ?>
 

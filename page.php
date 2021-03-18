@@ -13,7 +13,7 @@
  *  @var object */
 global $themify; ?>
 
-<section>
+
 <?php themify_content_before(); // hook 
 
 	if( is_front_page() == false ){ ?>
@@ -22,12 +22,13 @@ global $themify; ?>
 		<?php if($themify->page_title != "yes"): ?>
 		<header id="content-header" class="clearfix">
 			<time datetime="<?php the_time( 'o-m-d' ); ?>"></time>
-			<h1><?php the_title() ?></h1>
+			<h1 class="page-title"><?php the_title() ?></h1>
 		</header>
 	    <?php endif; ?>
 	    <!-- /page-title -->
 		
 <?php } ?>
+<section>
 <div id="layout" class="pagewidth clearfix">
 
 	<?php
@@ -69,7 +70,7 @@ global $themify; ?>
 		// PAGE
 		/////////////////////////////////////////////
 		?>
-		<?php if ( ! is_404() && have_posts() ) : while ( have_posts() ) : the_post(); ?>
+		<?php if ( ! is_404() && ! is_page(2207) && have_posts() ) : while ( have_posts() ) : the_post(); ?>
 			<div id="page-<?php the_ID(); ?>" class="type-page">
 
 			<div class="page-content entry-content">

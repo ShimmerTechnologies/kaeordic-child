@@ -28,7 +28,7 @@
 						<ul class="login" style="max-width:68px;">
 						<li><a href="<?php echo wp_logout_url(); ?>" title="Login">LOGOUT</a></li>	
 					<?php } else { ?>
-						<ul class="login" style="max-width:135px;">
+						<ul class="login" style="max-width:160px;">
 						<li><a href="<?php echo wp_login_url(); ?>" title="Login">LOGIN</a></li>
 						<li><span>&nbsp;|&nbsp;</span></li>
 				        <li class="last"><a href="<?php echo wp_registration_url(); ?>">REGISTER</a></li>
@@ -67,6 +67,12 @@
 				<div id="site-description" class="site-description"><?php echo class_exists( 'Themify_Customizer' ) ? $themify_customizer->site_description( $site_desc ) : $site_desc; ?></div>
 			<?php endif; ?>
 
+			<div class="cart">
+					<a href="<?php echo edd_get_checkout_uri(); ?>">
+							<i class="fa fa-shopping-cart" aria-hidden="true"></i><span class="header-cart edd-cart-quantity"><?php echo edd_get_cart_quantity(); ?></span>
+					</a>
+			</div>
+
 			<a id="menu-icon" href="#"></a>
 
 			<div id="mobile-menu" class="sidemenu sidemenu-off">
@@ -81,11 +87,7 @@
 			</div>
 			<!-- /#mobile-menu -->
 
-			<div class="cart">
-					<a href="<?php echo edd_get_checkout_uri(); ?>">
-							<i class="fa fa-shopping-cart" aria-hidden="true"></i><span class="header-cart edd-cart-quantity"><?php echo edd_get_cart_quantity(); ?></span>
-					</a>
-			</div>
+
 
 			<?php themify_header_end(); // hook ?>
 
